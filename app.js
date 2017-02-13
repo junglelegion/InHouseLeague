@@ -24,7 +24,8 @@ db.once('open', function() {
 var userSchema = mongoose.Schema({
   steamid: String,
   displayname: String,
-  avatar: String
+  avatar: String,
+  soloRating: Number
 });
 
 var User = mongoose.model('User', userSchema);
@@ -91,18 +92,39 @@ app.get('/auth/steam/return',
     var authenticatedUser = new User({
       steamid: steamid,
       displayname: displayname,
-      avatar: avatar });
+      avatar: avatar,
+      soloRating: 0});
     User.find({steamid: steamid}, function (err, user) {
-      if(!user) {
+      if(user.length == 0) {
         authenticatedUser.save();
       }
     });
     res.redirect('/');
 });
-
 app.get('/matchmaking/:type')
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
-app.use('/', routes);
+app.get('/', function(req, res) {
+  var solo = -1;
+  if(req.user) {
+    var steamid = req.user._json.steamid;
+    console.log(steamid);
+    User.find({steamid: steamid}, function (err, user) {
+      console.log(user);
+      solo = user[0].soloRating;
+      console.log(solo);
+      res.render('index', { title: 'Express', user: req.user, solo: solo });
+    });
+  }
+  else {
+    res.render('index', { title: 'Express', user: req.user, solo: solo });
+  }
+});
+
+// app.use('/', routes);
 app.use('/users', users);
 
 /// catch 404 and forwarding to error handler

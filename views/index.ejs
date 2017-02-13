@@ -1,7 +1,50 @@
-<% if (!user) { %>
-	<h2>Welcome! Please log in.</h2>
-	<p><a href="auth/steam"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png"/></a></p>
-<% } else { %>
-	<h2>Hello, <%= user.displayName %>! - <a href='logout'>Logout</a></h2>
-  <img src = <%= user._json.avatarfull %> />
-<% } %>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type='text/css' href='stylesheets/style.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="javascripts/find.js"></script>
+    <title>CSDL</title>
+  </head>
+  <body>
+    <div id="content">
+      <div id="top">
+        <img src='images/transparent_bg_white_fg_logo.png' height="75px"/>
+      </div>
+      <div id="news">
+        <div class="story" id="story">
+          <%= solo %>
+        </div>
+        <div id="sidebar">
+          <div id="profile">
+            <% if (!user) { %>
+              <center>
+              	<h2>Welcome! Please log in.</h2>
+              	<a href="auth/steam"><img src="/images/signin_steam.png"/></a>
+              </center>
+            <% } else { %>
+              <img src=<%= user._json.avatarfull %> height="100px" width="100px" style="float: left;">
+              <div id="name"><%= user.displayName %></div>
+              <div id="ovvw"><a href='logout'>Logout</a></div>
+            <% } %>
+          </div>
+          <% if (solo > -1) { %>
+            <div id="prostat">
+              <div style="float:left">Solo Rating:&nbsp;</div><div id="mmr"><%= solo %></div><div id="rf" onclick="refresh('mmr');"><img height="25px" src="./images/refresh.png"></div>
+            </div>
+          <% } %>
+          <div id="prostat">
+            <div style="float:left">League Rank:&nbsp;</div><div id="rank">1</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
+          </div>
+          <div id="prostat">
+            <div style="float:left">Account Status:</div><div class="changeme">Banned</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
+          </div>
+          <div id="badges">
+            <div id="center-text">Your Badges<br/></div>
+            You don't have any badges!
+</div>
+    </div>
+  </body>
+</html>
