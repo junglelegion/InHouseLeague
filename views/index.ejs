@@ -1,0 +1,7 @@
+<% if (!user) { %>
+	<h2>Welcome! Please log in.</h2>
+	<p><a href="auth/steam"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png"/></a></p>
+<% } else { %>
+	<h2>Hello, <%= user.displayName %>! - <a href='logout'>Logout</a></h2>
+  <img src = <%= user._json.avatarfull %> />
+<% } %>

@@ -1,0 +1,29 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "Nate Christianson",
+    "email": "natetc95@email.arizona.edu",
+    "url": "github.com/natetc95"
+  },
+  "scripts": {
+    "start": "nodejs ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "debug": "~0.7.4",
+    "ejs": "^2.5.5",
+    "express": "~4.0.0",
+    "express-session": "^1.15.1",
+    "express-sessions": "^1.0.6",
+    "jade": "~1.3.0",
+    "mongo-db": "^1.0.2",
+    "mongoose": "^4.8.2",
+    "morgan": "~1.0.0",
+    "passport": "^0.3.2",
+    "passport-steam": "^1.0.8",
+    "static-favicon": "~1.0.0"
+  }
+}
