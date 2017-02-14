@@ -1,6 +1,10 @@
 var timer = 0;
 var interval = null;
 
+window.onload = function() {
+  loadpage('news/0001');
+};
+
 function find(type) {
   var body = document.querySelector('body');
   var found = document.createElement("div");
