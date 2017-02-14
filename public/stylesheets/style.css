@@ -273,7 +273,6 @@ footer {
   height: 25px;
   line-height: 25px;
   padding-left: 25px;
-  margin-top: -5px;
   background: var(--secondary);
   font-size: 14px;
 }
@@ -351,4 +350,32 @@ input[type=text], textarea {
 }
 #cancel:hover {
   color: red;
+}
+
+.cbentry {
+  border: 1px solid var(--secondary);
+  padding: 15px;
+  margin: 1px;
+  width: 232px;
+  float: left;
+}
+
+.cbentry img {
+  float: left;
+}
+
+.cbentry h1 {
+  text-align: left;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0;
+  margin: 0;
+  padding-left: 60px;
+  cursor: default;
+}
+
+.cbentry form .slider {
+  float: left;
+  padding-left: 50px;
 }

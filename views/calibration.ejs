@@ -1,0 +1,61 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type='text/css' href='/stylesheets/style.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/javascripts/find.js"></script>
+    <title>CSDL</title>
+  </head>
+  <body>
+    <div id="content">
+      <div id="top">
+        <img src='/images/transparent_bg_white_fg_logo.png' height="75px"/>
+      </div>
+      <nav>
+        <a href="/">Home</a>|
+        <a href="/admin">Administration Home</a>|
+        <a href="/gamemmr">Change MMR</a>|
+        <a href="/playerdata">Modify Player</a>
+      </nav>
+      <div id="news">
+        <div class="title">
+          Calibration Management
+        </div>
+        <p>
+          <strong>How Calibration Works</strong><br/><br/>
+          Currently calibration works on the basis of the performance of each player in relation to the averages
+          recorded by opendota.com. The values are scaled from 0% to 200%. This way we can calibrated the exact amount
+          of influence each hero can have on a players MMR during calibration.
+          <br/><br/>
+          That way there is no Zeus spamming lighning bolts or Oracle spamming Purifying Flames to raise the calibration MMR.
+        </p>
+        <% for(var i = 0; i < heroes.length; i++) {%>
+          <center>
+          <div class="cbentry">
+            <img src="<%= heroes[i].img %>" height="30px" syle/><h1><%= heroes[i].localized_name %></h1><br/>
+            <form method="POST" action="calibration/post">
+              <label>GPM:</label><br/>
+              <input id="GPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <label>XPM:</label><br/>
+              <input id="XPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <label>KPM:</label><br/>
+              <input id="KPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <label>LHM:</label><br/>
+              <input id="LHM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <label>HDM:</label><br/>
+              <input id="HDM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <label>HHM:</label><br/>
+              <input id="HHM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <label>TD:</label><br/>
+              <input id="TD_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+            </form>
+          </div>
+        </center>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

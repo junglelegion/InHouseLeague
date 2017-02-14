@@ -3,32 +3,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link type='text/css' href='stylesheets/style.css' rel='stylesheet'>
+    <link type='text/css' href='/stylesheets/style.css' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="javascripts/find.js"></script>
     <title>CSDL</title>
+    <style>
+      .changeme {
+        color: <%= color %>
+      }
+    </style>
+    <script>
+      window.onload = function() {
+        loadpage('news/0001');
+      };
+    </script>
   </head>
   <body>
     <div id="content">
       <div id="top">
-        <img src='images/transparent_bg_white_fg_logo.png' height="75px"/>
+        <img src='../images/transparent_bg_white_fg_logo.png' height="75px"/>
       </div>
       <nav>
         <a href="#" onmouseover="switch_nav('meta')">News</a>|
-        <a href="#" onmouseover="switch_nav('find')">Find a Match</a>|
+        <% if(ass == "Active") { %><a href="#" onmouseover="switch_nav('find')">Find a Match</a>|<% } %>
         <a href="#" onmouseover="switch_nav('about')">About Us</a>|
         <a href="#" onmouseover="switch_nav('rules')">Rules</a>|
+        <% if(user) {if(user._json.steamid == "76561198078862008") {%><a href="#" onmouseover="switch_nav('admin')">Administration</a>|<% }} %>
         <a href="#" onmouseover="switch_nav('beta')">Join the Beta</a>
+
       </nav>
       <nav class="under-nav" id="meta" style="display: block">
         <a href="javascript:loadpage('news/0001')">Development News</a>|
         <a href="javascript:loadpage('news/0002')">In The Meta</a>|
         <a href="#">Weeaboo Shit</a>
       </nav>
-      <nav class="under-nav" id="find">
-        <a href="javascript:startmm()">All Pick</a>|
-        <a href="javascript:startmm()">Captains Mode</a>
-      </nav>
+      <% if(ass == "Active") { %>
+        <nav class="under-nav" id="find">
+          <a href="javascript:startmm()">All Pick</a>|
+          <a href="javascript:startmm()">Captains Mode</a>
+        </nav>
+      <% } %>
       <nav class="under-nav" id="beta">
         <a href="#">Sign Up</a>|
         <a href="javascript:navigate()">Submit your MMR Algorithm</a>|
@@ -44,6 +58,13 @@
         <a href="javascript:loadpage('rules/ingame')">Game Rules</a>|
         <a href="javascript:loadpage('about/content')">How Reporting Works</a>
       </nav>
+      <% if(user) {if(user._json.steamid == "76561198078862008") {%>
+        <nav class="under-nav" id="admin">
+          <a href="admin">Open Admin Panel</a>|
+          <a href="javascript:loadpage('rules/hosting')">Analytics</a>|
+          <a href="javascript:loadpage('rules/hosting')">OpenDota Updates</a>
+        </nav>
+      <% }} %>
       <div id="news">
         <div class="story" id="story">
         <a href="javascript:loadpage('xyz')">Load Me!</a>
@@ -61,26 +82,40 @@
               <div id="ovvw"><a href='logout'>Logout</a></div>
             <% } %>
           </div>
-          <% if (solo > -1) { %>
+          <% if (user) { %>
+            <% if (solo > -1) { %>
+              <div id="prostat">
+                <div style="float:left">Solo Rating:&nbsp;</div><div id="mmr"><%= solo %></div><div id="rf" onclick="refresh('mmr');"><img height="25px" src="./images/refresh.png"></div>
+              </div>
+            <% } else { %>
+              <div id="prostat">
+                <div style="float:left">Solo Rating:&nbsp;</div><div id="mmr">Calibrating</div><div id="rf" onclick="refresh('mmr');"><img height="25px" src="./images/refresh.png"></div>
+              </div>
+            <% } %>
+            <% if (rank > 0) { %>
+              <div id="prostat">
+                <div style="float:left">League Rank:&nbsp;</div><div id="rank"><%= rank %></div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
+              </div>
+            <% } else { %>
+              <div id="prostat">
+                <div style="float:left">League Rank:&nbsp;</div><div id="rank">Unranked</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
+              </div>
+            <% } %>
             <div id="prostat">
-              <div style="float:left">Solo Rating:&nbsp;</div><div id="mmr"><%= solo %></div><div id="rf" onclick="refresh('mmr');"><img height="25px" src="./images/refresh.png"></div>
+              <div style="float:left">Account Status:</div><div class="changeme"><%= ass %></div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
             </div>
+            <div id="badges">
+              <div id="center-text">Your Badges<br/></div>
+              <img src="/images/badges/foundersbadge.png" height="100px" width="100px" style="float: left; margin-top: 15px; margin-left: -15px;">
+            </div>
+            <% if(ass == "Active") { %>
+              <div id="findamatch">
+                <div id="center-text">Find a Match<br/>
+                <button class="fambtn" id="ap" onclick="startmm()">All Pick</button><br/>
+                <button class="fambtn" id="cm" onclick="startmm()">Captains Mode</button></div>
+              </div>
+            <% } %>
           <% } %>
-          <div id="prostat">
-            <div style="float:left">League Rank:&nbsp;</div><div id="rank">1</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
-          </div>
-          <div id="prostat">
-            <div style="float:left">Account Status:</div><div class="changeme">Banned</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
-          </div>
-          <div id="badges">
-            <div id="center-text">Your Badges<br/></div>
-            You don't have any badges!
-          </div>
-          <div id="findamatch">
-            <div id="center-text">Find a Match<br/>
-            <button class="fambtn" id="ap" onclick="startmm()">All Pick</button><br/>
-            <button class="fambtn" id="cm" onclick="startmm()">Captains Mode</button></div>
-          </div>
         </div>
       </div>
     </div>

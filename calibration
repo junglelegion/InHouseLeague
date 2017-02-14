@@ -1,0 +1,70 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type='text/css' href='stylesheets/style.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="javascripts/find.js"></script>
+    <title>CSDL</title>
+    <style>
+      .changeme {
+        color: red
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div id="top">
+        <img src='images/transparent_bg_white_fg_logo.png' height="75px"/>
+      </div>
+      <nav>
+        <a href="#" onmouseover="switch_nav('meta')">News</a>|
+        
+        <a href="#" onmouseover="switch_nav('about')">About Us</a>|
+        <a href="#" onmouseover="switch_nav('rules')">Rules</a>|
+        
+        <a href="#" onmouseover="switch_nav('beta')">Join the Beta</a>
+
+      </nav>
+      <nav class="under-nav" id="meta" style="display: block">
+        <a href="javascript:loadpage('news/0001')">Development News</a>|
+        <a href="javascript:loadpage('news/0002')">In The Meta</a>|
+        <a href="#">Weeaboo Shit</a>
+      </nav>
+      
+      <nav class="under-nav" id="beta">
+        <a href="#">Sign Up</a>|
+        <a href="javascript:navigate()">Submit your MMR Algorithm</a>|
+        <a href="#">Submit Suggestions</a>
+      </nav>
+      <nav class="under-nav" id="about">
+        <a href="javascript:loadpage('about/devblog')">Hardware & Software</a>|
+        <a href="javascript:loadpage('about/allofmywat')">How it works</a>|
+        <a href="javascript:loadpage('about/content')">Content</a>
+      </nav>
+      <nav class="under-nav" id="rules">
+        <a href="javascript:loadpage('rules/hosting')">Hosting Rules</a>|
+        <a href="javascript:loadpage('rules/ingame')">Game Rules</a>|
+        <a href="javascript:loadpage('about/content')">How Reporting Works</a>
+      </nav>
+      
+      <div id="news">
+        <div class="story" id="story">
+        <a href="javascript:loadpage('xyz')">Load Me!</a>
+        </div>
+        <div id="sidebar">
+          <div id="profile">
+            
+              <center>
+              	<h2>Welcome! Please log in.</h2><br/>
+              	<a href="auth/steam"><img src="/images/signin_steam.png"/></a>
+              </center>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

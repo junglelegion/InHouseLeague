@@ -15,34 +15,53 @@ var stmAPI = '3A3336E7FAEBD22160BB92B7767E4A2D';
 
 var mongo = require('mongo-db');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/ihl/users');
-var db = mongoose.connection;
+
+var db = mongoose.createConnection('mongodb://localhost/ihl/users');
+var hb = mongoose.createConnection('mongodb://localhost/ihl/heros');
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('> We have a connection captain!\n');
+  console.log('> We have a connection to users captain!');
+});
+hb.on('error', console.error.bind(console, 'connection error:'));
+hb.once('open', function() {
+  console.log('> We have a connection to heroes captain!');
 });
 
-var userSchema = mongoose.Schema({
+// Creation of the User Schema and Model
+
+var userSchema = new mongoose.Schema({
   steamid: String,
   displayname: String,
   avatar: String,
-  soloRating: Number
+  soloRating: Number,
+  rank: Number,
+  ass: String,
+  badges: [String],
+  cabRating: Number,
+  cabRemain: Number
 });
+var User = db.model('User', userSchema);
 
-var User = mongoose.model('User', userSchema);
+// Creation of the Hero Schema and Model
 
-var routes = require('./routes/index');
+var heroSchema = new mongoose.Schema({
+  id : Number,
+  name : String,
+  localized_name : String,
+  img : String,
+  hero_id : Number
+});
+var Hero = hb.model('Hero', heroSchema);
+
 var users = require('./routes/users');
 
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
 passport.use(new SteamStrategy({
     returnURL: 'http://localhost:3000/auth/steam/return',
     realm: 'http://localhost:3000/',
@@ -78,12 +97,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/auth/steam',
-  passport.authenticate('steam'),
-  function(req, res) {
-    // The request will be redirected to Steam for authentication, so
-    // this function will not be called.
-  });
+app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {console.log("Authenticating User");});
 
 app.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/login' }),
@@ -95,7 +109,13 @@ app.get('/auth/steam/return',
       steamid: steamid,
       displayname: displayname,
       avatar: avatar,
-      soloRating: 0});
+      soloRating: 0,
+      rank: 1,
+      ass: "Under Review",
+      badges: [],
+      cabRating: 0,
+      cabRemain: 10
+    });
     User.find({steamid: steamid}, function (err, user) {
       if(user.length == 0) {
         authenticatedUser.save();
@@ -103,39 +123,77 @@ app.get('/auth/steam/return',
     });
     res.redirect('/');
 });
-app.get('/matchmaking/:type')
+
+app.get('/matchmaking', function(req, res) {
+  res.send("Test");
+});
+
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
 
+app.get('/admin', function(req, res) {
+  if(req.user) {
+    res.render('admin');
+  }
+  else {
+    res.redirect('/');
+  }
+});
+
+app.get('/calibration', function(req,res) {
+  if(req.user) {
+    Hero.find({}, function(err, heroes){
+      res.render('calibration', {heroes: heroes});
+    })
+  }
+  else {
+    res.redirect('/');
+  }
+});
+
 app.get('/', function(req, res) {
   var solo = -1;
+  var rank = 0;
+  var acc = "N/A";
+  var color = "red";
   if(req.user) {
     var steamid = req.user._json.steamid;
-    console.log(steamid);
     User.find({steamid: steamid}, function (err, user) {
-      console.log(user);
       solo = user[0].soloRating;
-      console.log(solo);
-      res.render('index', { title: 'Express', user: req.user, solo: solo });
+      rank = user[0].rank;
+      acc = user[0].ass;
+      switch(acc) {
+        case "Banned":
+          color = "red";
+          break;
+        case "Suspended":
+          color = "orange";
+          break;
+        case "Active":
+          color = "green";
+          break;
+        case "Under Review":
+          color = "yellow";
+          break;
+      }
+      res.render('index', { title: 'Express', user: req.user, solo: solo, rank: rank, ass: acc, color: color});
     });
   }
   else {
-    res.render('index', { title: 'Express', user: req.user, solo: solo });
+    res.render('index', { title: 'Express', user: req.user, solo: solo, rank: rank, ass: acc, color: color });
   }
 });
 
 app.get('/pageloader', function(req, res) {
   if(req.xhr) {
-    console.log(req.query.page);
     res.render('pages/' + req.query.page + '.ejs');
   }
 });
 
 // app.use('/', routes);
 app.use('/users', users);
-
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
