@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var request = require('request');
+
 var passport = require('passport');
 var SteamStrategy = require('passport-steam').Strategy;
 
@@ -121,6 +123,13 @@ app.get('/', function(req, res) {
   }
   else {
     res.render('index', { title: 'Express', user: req.user, solo: solo });
+  }
+});
+
+app.get('/pageloader', function(req, res) {
+  if(req.xhr) {
+    console.log(req.query.page);
+    res.render('pages/' + req.query.page + '.ejs');
   }
 });
 

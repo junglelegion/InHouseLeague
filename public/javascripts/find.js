@@ -43,7 +43,9 @@ function navigate() {
 function loadpage(str) {
   document.getElementById('story').innerHTML = "";
   $.ajax({
-      url: './phpHelpers/controller.php',
+      url: 'pageloader',
+      type: 'GET',
+      dataType: 'html',
       data: {
         page: str
       },

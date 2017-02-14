@@ -13,15 +13,46 @@
       <div id="top">
         <img src='images/transparent_bg_white_fg_logo.png' height="75px"/>
       </div>
+      <nav>
+        <a href="#" onmouseover="switch_nav('meta')">News</a>|
+        <a href="#" onmouseover="switch_nav('find')">Find a Match</a>|
+        <a href="#" onmouseover="switch_nav('about')">About Us</a>|
+        <a href="#" onmouseover="switch_nav('rules')">Rules</a>|
+        <a href="#" onmouseover="switch_nav('beta')">Join the Beta</a>
+      </nav>
+      <nav class="under-nav" id="meta" style="display: block">
+        <a href="javascript:loadpage('news/0001')">Development News</a>|
+        <a href="javascript:loadpage('news/0002')">In The Meta</a>|
+        <a href="#">Weeaboo Shit</a>
+      </nav>
+      <nav class="under-nav" id="find">
+        <a href="javascript:startmm()">All Pick</a>|
+        <a href="javascript:startmm()">Captains Mode</a>
+      </nav>
+      <nav class="under-nav" id="beta">
+        <a href="#">Sign Up</a>|
+        <a href="javascript:navigate()">Submit your MMR Algorithm</a>|
+        <a href="#">Submit Suggestions</a>
+      </nav>
+      <nav class="under-nav" id="about">
+        <a href="javascript:loadpage('about/devblog')">Hardware & Software</a>|
+        <a href="javascript:loadpage('about/allofmywat')">How it works</a>|
+        <a href="javascript:loadpage('about/content')">Content</a>
+      </nav>
+      <nav class="under-nav" id="rules">
+        <a href="javascript:loadpage('rules/hosting')">Hosting Rules</a>|
+        <a href="javascript:loadpage('rules/ingame')">Game Rules</a>|
+        <a href="javascript:loadpage('about/content')">How Reporting Works</a>
+      </nav>
       <div id="news">
         <div class="story" id="story">
-          <%= solo %>
+        <a href="javascript:loadpage('xyz')">Load Me!</a>
         </div>
         <div id="sidebar">
           <div id="profile">
             <% if (!user) { %>
               <center>
-              	<h2>Welcome! Please log in.</h2>
+              	<h2>Welcome! Please log in.</h2><br/>
               	<a href="auth/steam"><img src="/images/signin_steam.png"/></a>
               </center>
             <% } else { %>
@@ -44,7 +75,9 @@
           <div id="badges">
             <div id="center-text">Your Badges<br/></div>
             You don't have any badges!
-</div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
