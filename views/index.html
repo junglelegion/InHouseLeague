@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type='text/css' href='styles/styles.css' rel='stylesheet'>
+    <title>CSDL</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="jsHelpers/find.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div id="top">
+        <img src="./images/transparent_bg_white_fg_logo.png" height="50px">
+      </div>
+      <nav>
+        <a href="#" onmouseover="switch_nav('meta')">News</a>|
+        <a href="#" onmouseover="switch_nav('find')">Find a Match</a>|
+        <a href="#" onmouseover="switch_nav('about')">About Us</a>|
+        <a href="#" onmouseover="switch_nav('rules')">Rules</a>|
+        <a href="#" onmouseover="switch_nav('beta')">Join the Beta</a>
+      </nav>
+      <nav class="under-nav" id="meta" style="display: block">
+        <a href="javascript:loadpage('./news/0001.html')">Development News</a>|
+        <a href="javascript:loadpage('./news/0002.html')">In The Meta</a>|
+        <a href="#">Weeaboo Shit</a>
+      </nav>
+      <nav class="under-nav" id="find">
+        <a href="javascript:startmm()">All Pick</a>|
+        <a href="javascript:startmm()">Captains Mode</a>
+      </nav>
+      <nav class="under-nav" id="beta">
+        <a href="#">Sign Up</a>|
+        <a href="javascript:navigate()">Submit your MMR Algorithm</a>|
+        <a href="#">Submit Suggestions</a>
+      </nav>
+      <nav class="under-nav" id="about">
+        <a href="javascript:loadpage('./about/devblog.html')">Hardware & Software</a>|
+        <a href="javascript:loadpage('./about/allofmywat.html')">How it works</a>|
+        <a href="javascript:loadpage('./about/content.html')">Content</a>
+      </nav>
+      <nav class="under-nav" id="rules">
+        <a href="javascript:loadpage('./rules/hosting.html')">Hosting Rules</a>|
+        <a href="javascript:loadpage('./rules/ingame.html')">Game Rules</a>|
+        <a href="javascript:loadpage('./about/content.html')">How Reporting Works</a>
+      </nav>
+      <div id="news">
+        <div class="story" id="story">
+          <?php require('./news/0001.html'); ?>
+        </div>
+        <div id="sidebar">
+          <div id="profile">
+            <img src="./images/kim.jpg" height="100px" width="100px" style="float: left;">
+            <div id="name">Kim Jung Il</div>
+            <div id="ovvw">Overview</div>
+          </div>
+          <div id="prostat">
+            <div style="float:left">Solo Rating:&nbsp;</div><div id="mmr">7142</div><div id="rf" onclick="refresh('mmr');"><img height="25px" src="./images/refresh.png"></div>
+          </div>
+          <div id="prostat">
+            <div style="float:left">League Rank:&nbsp;</div><div id="rank">1</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
+          </div>
+          <div id="prostat">
+            <div style="float:left">Account Status:</div><div class="changeme">Banned</div><div id="rf"><img height="25px" src="./images/refresh.png"></div>
+          </div>
+          <div id="badges">
+            <div id="center-text">Your Badges<br/></div>
+            You don't have any badges!
+          </div>
+          <div id="findamatch">
+            <div id="center-text">Find a Match<br/>
+            <button class="fambtn" id="ap" onclick="startmm()">All Pick</button><br/>
+            <button class="fambtn" id="cm" onclick="startmm()">Captains Mode</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
