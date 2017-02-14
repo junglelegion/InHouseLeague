@@ -1,0 +1,31 @@
+<div class="title">
+  What is this built in?
+</div>
+<img width="467px" src="./about/bannerdevblog.jpg">
+<p>
+  <strong>THE SERVER</strong><br/><br/>
+  This whole system is built on a LAMP stack. The vast majority of the site is loaded using Javascript AJAX calls. This way the actual page state
+  is preserved and all that changes is the main content div. I should probably mention that web development is not my trade, so this site is bound to be poorly
+  optimized. Should you have more experience, I would definitely appreciate your suggestions.
+  <br/><br/>
+  Now, down to the nitty gritty. The server is built on a LAMP stack consisting of:
+</p>
+<div id="ldiv">
+  <ul>
+    <li>Linux</li>
+    <li>Apache</li>
+    <li>MySQL</li>
+    <li>PHP</li>
+  </ul>
+</div>
+<p>
+  Apache handles all of the web get requests for serving the website. Then, we use Javascript to change the site so that the state of the
+  site never changes. In the background, PHP puts you into bins based on your mmr brackets and pulls from those for more even matchmaking.
+  <br/><br/><strong>THE NEWS</strong><br/><br/>
+  In terms of the news section, there is a MySQL table which holds all of the necessary filenames to be loaded into the container.
+  <br/><br/><strong>GAME HOSTING IN DOTO</strong><br/><br/>
+  The game hosting was tricky. Do you trust players to create games and then have after game reports for the server setup? Making people fill out
+  a survey can be tedious however it could produce better results. Or do you try to automate the process? Moreover, how do you automate the process?
+  The current plan is to trust players. It will be anonymous as to who is the host.
+  <br/><br/>More details will be added as I come up with them.
+</p>
