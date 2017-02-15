@@ -116,6 +116,7 @@ nav {
 .under-nav {
   border-top: 2px solid var(--primary);
   display: none;
+  margin-top: 1px;
 }
 
 nav a {
@@ -254,7 +255,7 @@ footer {
 }
 
 .story {
-  width: 467px;
+  width: 469px;
   float: left;
   border: 2px solid var(--secondary);
   margin-bottom: 50px;
