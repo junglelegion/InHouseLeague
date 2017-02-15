@@ -50,7 +50,15 @@ var heroSchema = new mongoose.Schema({
   name : String,
   localized_name : String,
   img : String,
-  hero_id : Number
+  hero_id : Number,
+  GPM_cal: Number,
+  XPM_cal: Number,
+  KPM_cal: Number,
+  LHM_cal: Number,
+  HDM_cal: Number,
+  HHM_cal: Number,
+  TD_cal: Number,
+  scr_cal: String
 });
 var Hero = hb.model('Hero', heroSchema);
 
@@ -98,7 +106,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/auth/steam', passport.authenticate('steam'), function(req, res) {console.log("Authenticating User");});
-
 app.get('/auth/steam/return',
   passport.authenticate('steam', { failureRedirect: '/login' }),
   function(req, res) {
@@ -123,11 +130,6 @@ app.get('/auth/steam/return',
     });
     res.redirect('/');
 });
-
-app.get('/matchmaking', function(req, res) {
-  res.send("Test");
-});
-
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
@@ -141,7 +143,6 @@ app.get('/admin', function(req, res) {
     res.redirect('/');
   }
 });
-
 app.get('/calibration', function(req,res) {
   if(req.user) {
     Hero.find({}, function(err, heroes){
@@ -151,6 +152,16 @@ app.get('/calibration', function(req,res) {
   else {
     res.redirect('/');
   }
+});
+app.get('/calibration/post', function(req, res) {
+  if(req.user) {
+    Hero.update({hero_id: req.query.hid},
+      {$set: {GPM_cal: req.query.GPM, XPM_cal: req.query.XPM, KPM_cal: req.query.KPM, LHM_cal: req.query.LHM, HDM_cal: req.query.HDM, HHM_cal: req.query.HHM, TD_cal: req.query.TD, scr_cal: req.query.scr}},
+      function(e) {
+        console.log(req.query.hid + ": Updated!");
+      });
+    }
+  res.redirect('/calibration');
 });
 
 app.get('/', function(req, res) {

@@ -16,7 +16,7 @@ function find(type) {
   </div>
   <div id="decline" onClick="swap()">Decline match</div>
   <audio autoplay="true">
-    <source src="sounds/found.mp3" type="audio/mpeg">
+    <source src="/sounds/found.ogg" type="audio/ogg">
   </audio>`;
   body.appendChild(found);
 }

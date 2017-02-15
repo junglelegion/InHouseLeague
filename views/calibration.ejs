@@ -30,26 +30,32 @@
           of influence each hero can have on a players MMR during calibration.
           <br/><br/>
           That way there is no Zeus spamming lighning bolts or Oracle spamming Purifying Flames to raise the calibration MMR.
+          <br/><br/><strong>Custom Scripts</strong><br/><br/>
+          This has yet to be implemented. The purpose is to prevent the MVP complex. This way the carry isn't the only one who gets an MMR boost.
         </p>
         <% for(var i = 0; i < heroes.length; i++) {%>
           <center>
           <div class="cbentry">
-            <img src="<%= heroes[i].img %>" height="30px" syle/><h1><%= heroes[i].localized_name %></h1><br/>
-            <form method="POST" action="calibration/post">
+            <img src="<%= heroes[i].img %>" height="40px" syle/><br/><h1><%= heroes[i].localized_name %></h1><br/>
+            <form method="GET" action="calibration/post">
               <label>GPM:</label><br/>
-              <input id="GPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="GPM" id="GPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].GPM_cal %>"/><br/>
               <label>XPM:</label><br/>
-              <input id="XPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="XPM" id="XPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].XPM_cal %>"/><br/>
               <label>KPM:</label><br/>
-              <input id="KPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="KPM" id="KPM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].KPM_cal %>"/><br/>
               <label>LHM:</label><br/>
-              <input id="LHM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="LHM" id="LHM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].LHM_cal %>"/><br/>
               <label>HDM:</label><br/>
-              <input id="HDM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="HDM" id="HDM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].HDM_cal %>"/><br/>
               <label>HHM:</label><br/>
-              <input id="HHM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="HHM" id="HHM_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].HHM_cal %>"/><br/>
               <label>TD:</label><br/>
-              <input id="TD_<%= heroes[i].hero_id %>" type="number" min="0" max="200" value="100"/><br/>
+              <input name="TD" id="TD_<%= heroes[i].hero_id %>" type="number" min="0" max="200" step="10" value="<%= heroes[i].TD_cal %>"/><br/>
+              <br/><label>Custom Scripts:</label><br/>
+              <textarea name="scr" rows="8" cols="20" ><%= heroes[i].scr_cal %></textarea>
+              <input name="hid" value="<%= heroes[i].hero_id %>" type="hidden"/>
+              <br/><br/><input type="submit" value="Submit"/>
             </form>
           </div>
         </center>

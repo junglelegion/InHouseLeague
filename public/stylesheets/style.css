@@ -361,19 +361,15 @@ input[type=text], textarea {
   float: left;
 }
 
-.cbentry img {
-  float: left;
-}
-
 .cbentry h1 {
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   height: 30px;
   line-height: 30px;
   padding: 0;
   margin: 0;
-  padding-left: 60px;
   cursor: default;
+  font-weight: bold;
 }
 
 .cbentry form .slider {
