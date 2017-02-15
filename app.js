@@ -1,3 +1,5 @@
+// Node Modules
+
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
@@ -5,13 +7,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
 var request = require('request');
-
 var passport = require('passport');
 var SteamStrategy = require('passport-steam').Strategy;
 
-var stmAPI = '3A3336E7FAEBD22160BB92B7767E4A2D';
+//Database Initialization
 
 var mongo = require('mongo-db');
 var mongoose = require('mongoose');
@@ -61,6 +61,27 @@ var heroSchema = new mongoose.Schema({
   scr_cal: String
 });
 var Hero = hb.model('Hero', heroSchema);
+
+// Steam Stuff
+var stmAPI = '3A3336E7FAEBD22160BB92B7767E4A2D';
+
+// Application Administrators
+var admins = ["76561198078862008", ""]
+function isAdmin(user) {
+  if (user) {
+    var steamid = user._json.steamid;
+    var ex = false;
+    for (var i = 0; i < admins.length; i++) {
+      if(admins[i] == steamid) {
+        ex = true;
+      }
+    }
+    return ex;
+  }
+  else {
+    return false;
+  }
+}
 
 var users = require('./routes/users');
 
@@ -128,6 +149,7 @@ app.get('/auth/steam/return',
         authenticatedUser.save();
       }
     });
+    if(isAdmin(req.user)) { console.log("Admin has logged in!"); }
     res.redirect('/');
 });
 app.get('/logout', function(req, res){
@@ -135,17 +157,23 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+//Administration Router
 app.get('/admin', function(req, res) {
-  if(req.user) {
+  if(req.user && isAdmin(req.user)) {
     res.render('admin');
   }
   else {
     res.redirect('/');
   }
 });
+
+// Calibration Settings Handlers
 app.get('/calibration', function(req,res) {
-  if(req.user) {
+  if(req.user && isAdmin(req.user)) {
     Hero.find({}, function(err, heroes){
+      heroes.sort(function(a, b) {
+        return a.localized_name.localeCompare(b.localized_name);
+      });
       res.render('calibration', {heroes: heroes});
     })
   }
@@ -154,7 +182,7 @@ app.get('/calibration', function(req,res) {
   }
 });
 app.get('/calibration/post', function(req, res) {
-  if(req.user) {
+  if(req.user && isAdmin(req.user)) {
     Hero.update({hero_id: req.query.hid},
       {$set: {GPM_cal: req.query.GPM, XPM_cal: req.query.XPM, KPM_cal: req.query.KPM, LHM_cal: req.query.LHM, HDM_cal: req.query.HDM, HHM_cal: req.query.HHM, TD_cal: req.query.TD, scr_cal: req.query.scr}},
       function(e) {
@@ -164,6 +192,10 @@ app.get('/calibration/post', function(req, res) {
   res.redirect('/calibration');
 });
 
+// Game MMR Settings Handler
+
+
+// Index Page Handler
 app.get('/', function(req, res) {
   var solo = -1;
   var rank = 0;
@@ -197,6 +229,7 @@ app.get('/', function(req, res) {
   }
 });
 
+// Index Page Loader Handler
 app.get('/pageloader', function(req, res) {
   if(req.xhr) {
     res.render('pages/' + req.query.page + '.ejs');
